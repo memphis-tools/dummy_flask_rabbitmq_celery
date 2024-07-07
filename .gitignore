@@ -1,0 +1,14 @@
+flake8_html_report
+*.pyc
+__pycache__
+env
+.env
+.env.rc
+.env.rc.tests
+venv
+.venv
+.pytest_cache
+.cache
+poetry.lock
+.vscode
+htmlcov

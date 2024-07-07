@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}BOOKS{% endblock title %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+  <div class="section_header w-50">
+    <h1>Here you should have some books illustrated sir</h1>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      In mollis eros sit amet velit volutpat condimentum.
+      Morbi consequat mattis lacus sit amet tincidunt.
+      Fusce diam elit, scelerisque quis orci vel, fringilla eleifend nulla.
+      Donec placerat leo a dui ultrices iaculis. Sed quis malesuada nunc.
+      Aliquam at turpis lacus. Phasellus enim turpis, hendrerit et dapibus vestibulum, tincidunt vitae est.
+      Ut ac nibh in tellus volutpat mollis a vitae diam.
+      Sed vitae lacinia felis, sed dignissim neque.
+    </p>
+    <a class="btn btn-primary" href="{{ url_for('routes.books') }}">MORE BOOKS</a>
+  </div>
+</div>
+{% endblock content %}

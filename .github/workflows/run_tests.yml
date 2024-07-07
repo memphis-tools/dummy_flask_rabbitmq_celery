@@ -1,0 +1,53 @@
+name: Run Tests on Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    env:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
+      MONGO_SERVER: localhost
+      MONGO_PORT: 27017
+      MONGO_DB_NAME: test_dummy_movies
+      MONGO_COLLECTION_NAME: movies
+      MAIL_SERVER: localhost
+      MAIL_PORT: 25
+      MAIL_USERNAME: "daisy"
+      MAIL_PASSWORD: ""
+      MAIL_USE_TLS: False
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          sudo apt-get install -y postfix netcat
+          sudo systemctl enable --now postfix
+          sudo useradd ${MAIL_USERNAME}
+
+      - name: Set up Docker Compose
+        run: |
+          export PYTHONPATH=./celery_client_and_worker/app
+          ./start_application.sh -c test
+
+      - name: Run tests
+        run: |
+          export PYTHONPATH=./celery_client_and_worker/app
+          coverage run -m unittest -v
+
+      - name: Tear down Docker Compose
+        run: ./stop_application.sh

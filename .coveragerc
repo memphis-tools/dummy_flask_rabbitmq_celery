@@ -1,0 +1,15 @@
+[run]
+branch = True
+source =
+    celery_client_and_worker
+    mongodb
+
+
+[report]
+omit = movies_into_pdf.py, \
+    celery_client_and_worker/__init__.py, \
+    celery_client_and_worker/app/__init__.py, \
+    celery_client_and_worker/app/settings.py
+
+[xml]
+output = coverage.xml

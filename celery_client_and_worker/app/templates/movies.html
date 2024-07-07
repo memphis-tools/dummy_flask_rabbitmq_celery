@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}MOVIES{% endblock title %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+  <div class="section_header w-50">
+    <h1>Here you should have some movies illustrated sir</h1>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Morbi euismod ipsum et risus accumsan egestas.
+      Nam in suscipit ex, non mollis augue.
+      Praesent porta arcu eget elit sodales, vel interdum purus semper.
+      Donec pulvinar justo nec velit bibendum tincidunt.
+      Quisque sollicitudin tellus erat, vitae sodales.
+    </p>
+    <a class="btn btn-primary" href="{{ url_for('routes.movies') }}">MORE MOVIES</a>
+  </div>
+</div>
+{% endblock content %}

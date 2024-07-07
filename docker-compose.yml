@@ -1,0 +1,129 @@
+services:
+  dummy_mongo:
+    image: dummy_mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
+      - MONGO_SERVER=$MONGO_SERVER
+      - MONGO_PORT=$MONGO_PORT
+      - MONGO_DB_NAME=dummy_movies
+      - MONGO_COLLECTION_NAME=$MONGO_COLLECTION_NAME
+    deploy:
+      replicas: 1
+    networks:
+      - dummy-network
+
+  nginx:
+    image: dummy_nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - dummy_mongo
+    volumes:
+      - ./nginx/certs:/etc/nginx/certs/
+      - ./nginx/conf:/etc/nginx/conf.d
+      - static_files:/static_files
+    networks:
+      - dummy-network
+
+  flask_front:
+    image: dummy_flask:latest
+    command: gunicorn --bind 0.0.0.0:8000 flask_app:app
+    volumes:
+      - static_files:/code/static_files
+    environment:
+      - CELERY_BROKER_URL=$CELERY_BROKER_URL
+      - CELERY_RESULT_BACKEND=$CELERY_RESULT_BACKEND
+      - TIMEZONE=$TIMEZONE
+    depends_on:
+      - dummy_mongo
+      - nginx
+      - celery_worker
+    deploy:
+      replicas: 1
+    networks:
+      - dummy-network
+
+  redis:
+    image: dummy_redis:latest
+    volumes:
+      - redis_data:/data
+    depends_on:
+      - dummy_mongo
+      - rabbitmq
+    deploy:
+      replicas: 1
+    networks:
+      - dummy-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=$RABBITMQ_DEFAULT_USER
+      - RABBITMQ_DEFAULT_PASS=$RABBITMQ_DEFAULT_PASS
+      - RABBITMQ_DEFAULT_VHOST=$RABBITMQ_DEFAULT_VHOST
+      - NODENAME=rabbit@localhost
+      - RABBITMQ_DEFAULT_PERMISSIONS_REGEX=^.*$$
+    depends_on:
+      - dummy_mongo
+    volumes:
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/conf.d/20-custom.conf
+      - rabbitmq_data:/var/lib/rabbitmq/
+    secrets:
+      - erlang_cookie
+    deploy:
+      replicas: 1
+    networks:
+      - dummy-network
+      - host
+
+  celery_worker:
+    image: dummy_celery_worker:latest
+    environment:
+      - CELERY_BROKER_URL=$CELERY_BROKER_URL
+      - CELERY_RESULT_BACKEND=$CELERY_RESULT_BACKEND
+      - TIMEZONE=$TIMEZONE
+      - MAIL_SERVER=$MAIL_SERVER
+      - MAIL_PORT=$MAIL_PORT
+      - MAIL_USE_TLS=$MAIL_USE_TLS
+      - MAIL_USERNAME=$MAIL_USERNAME
+      - MAIL_PASSWORD=$MAIL_PASSWORD
+      - MAIL_SENDER=$MAIL_SENDER
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
+      - MONGO_SERVER=dummy_mongo
+      - MONGO_PORT=$MONGO_PORT
+      - MONGO_DB_NAME=dummy_movies
+      - MONGO_COLLECTION_NAME=${MONGO_COLLECTION_NAME}
+    volumes:
+      - static_files:/code/static_files
+    depends_on:
+      - redis
+      - rabbitmq
+      - dummy_mongo
+    deploy:
+      replicas: 2
+    healthcheck:
+      test: ["CMD", "celery", "status"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    networks:
+      - dummy-network
+      - host
+
+volumes:
+  static_files:
+  rabbitmq_data:
+  redis_data:
+
+networks:
+  dummy-network:
+    external: true
+  host:
+    external: true
+
+secrets:
+  erlang_cookie:
+    external: true
