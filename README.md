@@ -7,7 +7,7 @@
 ![Screenshot](https://img.shields.io/badge/flask-v3.0.3-blue?logo=flask&logoColor=yellow)
 ![Screenshot](https://img.shields.io/badge/mongodb-v7.0.12-blue?logo=mongodb&logoColor=yellow)
 ![pylint and flake](https://github.com/memphis-tools/dummy_flask_rabbitmq_celery/actions/workflows/lint-flake.yml/badge.svg)
-![pylint]()
+![pylint](https://img.shields.io/badge/PyLint-10.00-brightgreen?logo=python&logoColor=white)
 ![unittest](https://github.com/memphis-tools/dummy_flask_rabbitmq_celery/actions/workflows/run_tests.yml/badge.svg)
 
 
