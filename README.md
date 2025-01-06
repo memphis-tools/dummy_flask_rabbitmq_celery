@@ -1,4 +1,4 @@
-![Screenshot](https://img.shields.io/badge/python-v3.11-blue?logo=python&logoColor=yellow)
+![Screenshot](https://img.shields.io/badge/python-v3.12-blue?logo=python&logoColor=yellow)
 ![Screenshot](https://img.shields.io/badge/rabbitmq-v3.13.3-blue?logo=rabbitmq&logoColor=yellow)
 ![Screenshot](https://img.shields.io/badge/redis-v5.0.6-blue?logo=redis&logoColor=yellow)
 ![Screenshot](https://img.shields.io/badge/celery-v5.4.0-blue?logo=celery&logoColor=yellow)
