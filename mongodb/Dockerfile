@@ -11,6 +11,7 @@ COPY ./mongodb/requirements.txt /requirements.txt
 RUN python3.12 -m venv .venv
 RUN . .venv/bin/activate
 RUN .venv/bin/python3 -m pip install -r /requirements.txt
+RUN pip list
 
 VOLUME /data/db
 

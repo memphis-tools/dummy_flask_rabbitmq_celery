@@ -25,6 +25,7 @@ SWARM_NETWORK_NAME="dummy-network"
 HOST_NETWORK_NAME="host"
 ERLANG_COOKIE_NAME="erlang_cookie"
 NGINX_CERTS_FOLDER="nginx/certs"
+NGINX_CERT_NAME="dummy_flask_rabbitmq_celery.crt"
 DOCKER_COMPOSE_FILE_PATH="./docker-compose.yml"
 USER_USED_ARGS="FALSE"
 CYAN='\033[1;36m'
@@ -68,7 +69,7 @@ fi
 
 create_self_signed_certs_if_missing() {
   # Argument 1 is the path of NGINX certs folder
-  if [[ -z "$(ls -A $1)" ]]
+  if [[ -z "$(ls -A $1/$NGINX_CERT_NAME)" ]]
   then
     echo -e "$GREEN[+] [$RUNNING_ENV] Create dummy self signed certs $RESET"
     ./nginx/self_signed_cert_maker.sh $1 &> /dev/null
@@ -172,7 +173,8 @@ echo -e "$GREEN[+] [$RUNNING_ENV] Docker network '$SWARM_NETWORK_NAME' created $
 if [[ $TEST_CONTEXT == "TRUE" ]]
 then
   echo -e "$WHITE[+] [$RUNNING_ENV] Creating $HOST_NETWORK_NAME docker network $RESET"
-  docker network create -d overlay $HOST_NETWORK_NAME &>/dev/null
+  docker network create -d overlay $HOST_NETWORK_NAME
+  #docker network create -d overlay $HOST_NETWORK_NAME &>/dev/null
   echo -e "$GREEN[+] [$RUNNING_ENV] Docker network '$HOST_NETWORK_NAME' created $RESET"
 fi
 
