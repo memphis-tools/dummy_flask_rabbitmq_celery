@@ -107,7 +107,7 @@ def generate_a_pdf_to_consume() -> str:
 
         # Pagination
         c.setFont("Helvetica", 10)
-        c.drawRightString(width - 40, 30, f"{page_num +1}/{total_pages}")
+        c.drawRightString(width - 40, 30, f"{page_num + 1}/{total_pages}")
 
         # Add miniature image at the bottom center
         y_position = 60 if end_index == len(movies_list) else y_position
