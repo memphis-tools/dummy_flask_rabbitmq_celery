@@ -168,9 +168,9 @@ To stop the application only run:
 
 ## How lint it ?
 
-  pylint celery_client_and_worker/ mongodb/
+    pylint celery_client_and_worker/ mongodb/
 
-  flake8 celery_client_and_worker/ mongodb/ --max-line-length=127 --count --statistics
+    flake8 celery_client_and_worker/ mongodb/ --max-line-length=127 --count --statistics
 
 ## Usefull links
 
