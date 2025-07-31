@@ -1,4 +1,4 @@
-FROM python:3.13.4-slim-bookworm
+FROM python:3.14.0rc1-slim-bookworm
 
 RUN addgroup --system dummy-operator && adduser --system --group dummy-operator
 WORKDIR /code
