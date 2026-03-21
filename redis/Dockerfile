@@ -1,4 +1,4 @@
-FROM redis:latest
+FROM redis:8.4.0-bookworm
 
 RUN echo "vm.overcommit_memory = 1" > /etc/sysctl.conf
 
