@@ -31,7 +31,7 @@ pyflakes==3.4.0
 pylint==4.0.4
 pymongo==4.16.0
 python-dateutil==2.9.0.post0
-python-dotenv==1.2.1
+python-dotenv==1.2.2
 reportlab==4.4.10
 six==1.17.0
 tomlkit==0.14.0
