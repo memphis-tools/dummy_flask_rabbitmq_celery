@@ -43,4 +43,3 @@ def send_email(recipient, pdf_file_path):
         mail.send(msg)
     except Exception as e:
         print(f"Error occurred while sending email: {e}")
-
