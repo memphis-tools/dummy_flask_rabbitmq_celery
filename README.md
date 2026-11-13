@@ -17,19 +17,6 @@
 
 All services of this dummy illustration micro application are served through **Docker swarm**.
 
-Set up and coding on a RedHat Linux OS based system. The following RPM should be used:
-
-    python3-docker-pycreds >= 0.4.0-15
-    python3-dockerpty >= 0.4.1-27
-    python3-docker >= 5.0.3-3
-    python3-docker+ssh >= 5.0.3-3
-    docker-compose => 1.29.2-7
-    docker-compose-plugin => 2.27.1-1
-    docker-buildx-plugin => 0.14.1-1
-    docker-ce-cli => 26.1.4-1
-    docker-ce-rootless-extras => 26.1.4-1
-    docker-ce >= 26.1.4-1
-
 A running SMTP server at port 25 is required in order to have unittest tests succeeded (here postfix has been used), for a "tests" context.
 
 To set a basic configuration for this service, you will use files to load environment vars: '.env', '.env.rc.tests'
