@@ -53,6 +53,7 @@ then
           NGINX_CERTS_FOLDER="nginx/test_certs"
           DOCKER_COMPOSE_FILE_PATH="./test_docker-compose.yml"
 					MONGO_DB="test_dummy_movies"
+          SWARM_IP="0.0.0.0"
           shift
   			fi
           echo ""
