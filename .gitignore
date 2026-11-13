@@ -9,6 +9,10 @@ venv
 .venv
 .pytest_cache
 .cache
+.coverage
+htmlcov
 poetry.lock
 .vscode
-htmlcov
+*.crt
+*.key
+*.pem

@@ -18,9 +18,11 @@ jobs:
       MONGO_COLLECTION_NAME: movies
       MAIL_SERVER: localhost
       MAIL_PORT: 25
-      MAIL_USERNAME: "daisy"
+      MAIL_USERNAME: "root"
       MAIL_PASSWORD: ""
       MAIL_USE_TLS: False
+      MAIL_RECIPIENT: "root@localhost"
+      MAIL_SENDER: "flask@dummy-ops.localhost"
 
     steps:
       - name: Checkout code
@@ -29,7 +31,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
-          python-version: '3.12.10'
+          python-version: '3.14.8'
 
       - name: Install dependencies
         run: |
@@ -37,7 +39,6 @@ jobs:
           pip install -r requirements.txt
           sudo apt-get install -y postfix netcat-traditional
           sudo systemctl enable --now postfix
-          sudo useradd ${MAIL_USERNAME}
 
       - name: Set up Docker Compose
         run: |

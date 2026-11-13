@@ -31,10 +31,10 @@ class TestCeleryTasks(unittest.TestCase):
     def test_send_email(self):
         os.environ['PDF_FOLDER_PATH'] = "/tmp/"
         os.environ['PDF_FILE_NAME'] = "dummy_movies"
-
+        
         # Arrange
         pdf_file_path = generate_a_pdf_to_consume()
-        recipient = 'daisy@localhost'
+        recipient = os.environ['MAIL_RECIPIENT']
         os.environ['MAIL_SENDER'] = 'test_sender'
 
         # Act

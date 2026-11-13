@@ -39,4 +39,7 @@ def send_email(recipient, pdf_file_path):
     )
     msg.body = "Hello, thanks for using the service. Please find attached the document."
     msg.attach(pdf_file_name, "application/pdf", pdf_data)
-    mail.send(msg)
+    try:
+        mail.send(msg)
+    except Exception as e:
+        print(f"Error occurred while sending email: {e}")

@@ -7,7 +7,7 @@
 ![Screenshot](https://img.shields.io/badge/flask-v3.0.3-blue?logo=flask&logoColor=yellow)
 ![Screenshot](https://img.shields.io/badge/mongodb-v7.0.12-blue?logo=mongodb&logoColor=yellow)
 ![pylint and flake](https://github.com/memphis-tools/dummy_flask_rabbitmq_celery/actions/workflows/lint-flake.yml/badge.svg)
-![pylint](https://img.shields.io/badge/PyLint-10.00-brightgreen?logo=python&logoColor=white)
+![pylint](https://img.shields.io/badge/PyLint-9.88-yellow?logo=python&logoColor=white)
 ![unittest](https://github.com/memphis-tools/dummy_flask_rabbitmq_celery/actions/workflows/run_tests.yml/badge.svg)
 
 
@@ -17,22 +17,9 @@
 
 All services of this dummy illustration micro application are served through **Docker swarm**.
 
-Set up and coding on a RedHat Linux OS based system. The following RPM should be used:
-
-    python3-docker-pycreds >= 0.4.0-15
-    python3-dockerpty >= 0.4.1-27
-    python3-docker >= 5.0.3-3
-    python3-docker+ssh >= 5.0.3-3
-    docker-compose => 1.29.2-7
-    docker-compose-plugin => 2.27.1-1
-    docker-buildx-plugin => 0.14.1-1
-    docker-ce-cli => 26.1.4-1
-    docker-ce-rootless-extras => 26.1.4-1
-    docker-ce >= 26.1.4-1
-
 A running SMTP server at port 25 is required in order to have unittest tests succeeded (here postfix has been used), for a "tests" context.
 
-To set a basic configuration for this service, you will use files to load environment vars: '.env.rc', '.env.rc.tests'
+To set a basic configuration for this service, you will use files to load environment vars: '.env', '.env.rc.tests'
 
 For the simulated "prod" context, suggestion is to use, for example, <a href="https://mailtrap.io/">MAILTRAP</a>.
 
@@ -91,7 +78,7 @@ The **MongoDB** will have a default dummy database created: "dummy_movies". And 
 
 Once you entered the MongoDB container (replace username and password according to the ones defined in the compose file):
 
-    mongosh --username [username] --password [passord] --authenticationDatabase admin
+    mongosh --username [username] --password [password] --authenticationDatabase admin
 
 <img src="illustrations/mongodb.png" width="100%%" height="auto">
 
@@ -99,9 +86,11 @@ The swarm services need several timeouts. There is a simple usage of the 'sleep'
 
 ## How use it ?
 
-For convenience, 2 dummy bash scripts are set. First you source either .env.rc or .env.rc.tests.
+For convenience, 2 dummy bash scripts are set. First you source either .env or .env.rc.tests.
 
-Example content of a **.env.rc** file:
+Set a valid local ip address (e.g 192.168.1.45).
+
+Example content of a **.env** file:
 
     export SWARM_IP="0.0.0.0"
     export MONGO_INITDB_ROOT_USERNAME=admin
@@ -133,12 +122,13 @@ Example content of a **.env.rc.tests** file, will just be sligthly different fro
     export MAIL_USE_TLS=False
     export MAIL_USERNAME=""
     export MAIL_PASSWORD=""
+    export MAIL_RECIPIENT="you@localhost"
 
 As long as we start application in a "test" context, we run unittest.
 
 In a production context, we do not need to source the venv and set the PYTHONPATH.
 
-    source .env.rc
+    source .env
     ./start_application.sh
 
     source venv/bin/activate
@@ -149,7 +139,7 @@ In a production context, we do not need to source the venv and set the PYTHONPAT
 
 If you want to ask for one or more docker image to be rebuild:
 
-    source .env.rc
+    source .env
     ./start_application.sh -r flask
     ./start_application.sh -r flask mongo redis
 
