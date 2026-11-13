@@ -18,7 +18,7 @@ jobs:
       MONGO_COLLECTION_NAME: movies
       MAIL_SERVER: localhost
       MAIL_PORT: 25
-      MAIL_USERNAME: ""
+      MAIL_USERNAME: "root"
       MAIL_PASSWORD: ""
       MAIL_USE_TLS: False
       MAIL_RECIPIENT: "root@localhost"

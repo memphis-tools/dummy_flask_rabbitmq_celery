@@ -177,7 +177,6 @@ if [[ $TEST_CONTEXT == "TRUE" ]]
 then
   echo -e "$WHITE[+] [$RUNNING_ENV] Creating $HOST_NETWORK_NAME docker network $RESET"
   docker network create -d overlay $HOST_NETWORK_NAME
-  #docker network create -d overlay $HOST_NETWORK_NAME &>/dev/null
   echo -e "$GREEN[+] [$RUNNING_ENV] Docker network '$HOST_NETWORK_NAME' created $RESET"
 fi
 
