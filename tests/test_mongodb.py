@@ -44,7 +44,7 @@ class TestMongoDBEncoding(unittest.TestCase):
     def test_mongodb_encoding(self):
         self.assertEqual(ENCODED_USER, urllib.parse.quote_plus(os.getenv("MONGO_INITDB_ROOT_USERNAME")))
         self.assertEqual(ENCODED_PASSWORD, urllib.parse.quote_plus(os.getenv("MONGO_INITDB_ROOT_PASSWORD")))
-
+        
 
 if __name__ == "__main__":
     unittest.main()

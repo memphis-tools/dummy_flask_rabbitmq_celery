@@ -20,10 +20,24 @@ ENCODED_PASSWORD = urllib.parse.quote_plus(os.getenv("MONGO_INITDB_ROOT_PASSWORD
 
 
 def get_the_movies_list_from_mongodb() -> list:
-    """Returns a list of movies as dictionnaries, from a mongodb database"""
-    client = MongoClient(
-        f'mongodb://{ENCODED_USER}:{ENCODED_PASSWORD}@{os.getenv("MONGO_SERVER")}:{os.getenv("MONGO_PORT")}/'
-    )
+    """Returns a list of movies as dictionaries from MongoDB."""
+
+    try:
+        with MongoClient(
+            f'mongodb://{ENCODED_USER}:{ENCODED_PASSWORD}@'
+            f'{os.getenv("MONGO_SERVER")}:{os.getenv("MONGO_PORT")}/'
+        ) as client:
+
+            database = client[os.getenv("MONGO_DB_NAME")]
+            collection = database["movies"]
+            movies_list = list(collection.find())
+
+            return movies_list
+
+    except Exception as e:
+        print(f"Error occurred while connecting to MongoDB: {e}")
+        return []
+
     db = client[os.getenv("MONGO_DB_NAME")]
     collection = db[os.getenv("MONGO_COLLECTION_NAME")]
     documents = collection.find({}, {"_id": 0})

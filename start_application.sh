@@ -8,16 +8,16 @@
 # This script will engage either the docker-compose or the test_docker-compose based on parameters.
 # Also script allows to rebuild docker images.
 
-set -e
+set -eu
 
 usage () {
   # User can set a 'test' context and/or ask for rebuild specific images
 	echo "[USAGE] $0 [-c|--context] test [-r|--rebuild] nginx|mongo|flask|redis|celery_worker"
 }
 
-if [[ -f .env.rc ]]
+if [[ -f .env ]]
 then
-	source .env.rc
+	source .env
 fi
 TEST_CONTEXT="FALSE"
 RUNNING_ENV="prod"
@@ -86,7 +86,9 @@ create_docker_images_if_not_built_yet() {
 			echo -e "$GREEN[-] [$RUNNING_ENV] Image $1 does not exist, we build it $RESET"
       case "$1" in
         "dummy_mongo:latest")
-          docker build -t dummy_mongo:latest -f ./mongodb/Dockerfile . &>/dev/null
+          echo 'we builg dig sirrrr'
+          docker build -t dummy_mongo:latest -f ./mongodb/Dockerfile . #&>/dev/null
+          echo 'still good sir'
           ;;
         "dummy_redis:latest")
           docker build -t dummy_redis:latest -f ./redis/Dockerfile . &>/dev/null
