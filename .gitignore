@@ -13,6 +13,9 @@ venv
 htmlcov
 poetry.lock
 .vscode
-*.crt
-*.key
-*.pem
+nginx/certs/*.crt
+nginx/certs/*.key
+nginx/certs/*.pem
+nginx/test_certs/*.crt
+nginx/test_certs/*.key
+nginx/test_certs/*.pem
