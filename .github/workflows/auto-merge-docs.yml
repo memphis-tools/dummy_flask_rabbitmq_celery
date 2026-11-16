@@ -4,15 +4,16 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
-permissions:
-  contents: write
-  pull-requests: write
+permissions: {}
 
 jobs:
   auto-merge:
     if: |
       startsWith(github.head_ref, 'docs/')
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Enable auto-merge
         run: gh pr merge --auto --squash "$PR_URL"
