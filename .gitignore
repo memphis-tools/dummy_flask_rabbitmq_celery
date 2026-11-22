@@ -19,3 +19,6 @@ nginx/certs/*.pem
 nginx/test_certs/*.crt
 nginx/test_certs/*.key
 nginx/test_certs/*.pem
+*.crt
+*.key
+*.pem

@@ -23,7 +23,7 @@ services:
     depends_on:
       - dummy_mongo
     volumes:
-      - ./nginx/test_certs:/etc/nginx/certs/
+      - ./nginx/test_certs:/etc/nginx/certs/:ro,Z
       - ./nginx/conf:/etc/nginx/conf.d
       - test_static_files:/static_files
     networks:

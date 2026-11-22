@@ -25,7 +25,7 @@ SWARM_NETWORK_NAME="dummy-network"
 HOST_NETWORK_NAME="host"
 ERLANG_COOKIE_NAME="erlang_cookie"
 NGINX_CERTS_FOLDER="nginx/certs"
-NGINX_CERT_NAME="dummy_flask_rabbitmq_celery.crt"
+NGINX_CERT_NAME="dummy-flask-rabbitmq-celery.crt"
 DOCKER_COMPOSE_FILE_PATH="./docker-compose.yml"
 USER_USED_ARGS="FALSE"
 CYAN='\033[1;36m'
@@ -66,19 +66,6 @@ then
   	esac
   done
 fi
-
-
-create_self_signed_certs_if_missing() {
-  # Argument 1 is the path of NGINX certs folder
-  if [[ -z "$(ls -A $1/$NGINX_CERT_NAME)" ]]
-  then
-    echo -e "$GREEN[+] [$RUNNING_ENV] Create dummy self signed certs $RESET"
-    ./nginx/self_signed_cert_maker.sh $1 &> /dev/null
-  else
-    echo -e "$YELLOW[+] [$RUNNING_ENV] Dummy self signed certs already created $RESET"
-  fi
-}
-
 
 create_docker_images_if_not_built_yet() {
   # Docker swarm needs images to be created before building the stack
@@ -183,9 +170,6 @@ fi
 echo -e "$WHITE[+] [$RUNNING_ENV] Checking if a rebuild of docker images is required $RESET"
 if [[ $# -gt 0 ]]; then USER_USED_ARGS="TRUE"; check_if_user_ask_for_rebuild "$@"; fi
 if [[ "$USER_USED_ARGS" = "FALSE" ]];then echo -e "$GREEN[+] No rebuild required $RESET"; fi
-
-echo -e "$WHITE[+] [$RUNNING_ENV] Checking if NGINX cert files exist in: .$NGINX_CERTS_FOLDER/$RESET"
-create_self_signed_certs_if_missing $NGINX_CERTS_FOLDER
 
 echo -e "$WHITE[+] [$RUNNING_ENV] Ensuring docker images exist $RESET"
 create_docker_images_if_not_built_yet "dummy_mongo:latest"

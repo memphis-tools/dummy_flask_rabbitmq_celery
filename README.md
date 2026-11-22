@@ -45,7 +45,7 @@ Some dummy Flask routes.
 
 <img src="illustrations/flask.png" width="100%%" height="auto">
 
-A dummy mailtrap account.
+A dummy mailtrap account (credentials are reset everytime).
 
 <img src="illustrations/mailtrap.png" width="100%%" height="auto">
 
@@ -72,6 +72,8 @@ The second one is for the celery worker to return message result to the rabbitmq
 
 The **Redis** database has a persistent volume. We can find all the transactions relative to the tasks execution from the celery workers.
 
+(mailtrap credentials are reset everytime).
+
 <img src="illustrations/redis.png" width="100%%" height="auto">
 
 The **MongoDB** will have a default dummy database created: "dummy_movies". And a dummy collection "movies", with 274 documents.
@@ -86,13 +88,21 @@ The swarm services need several timeouts. There is a simple usage of the 'sleep'
 
 ## How use it ?
 
+Create a dummy self-signed cert with a default dummy self CA:
+
+	# dnf install mkcert nss-tools
+	
+	$ mkcert -install
+
+	$ mkcert -cert-file ./certs/dummy-flask-rabbitmq-celery.crt -key-file ./certs/dummy-flask-rabbitmq-celery.key dummy-flask-rabbitmq-celery.dev
+
 For convenience, 2 dummy bash scripts are set. First you source either .env or .env.rc.tests.
 
 Set a valid local ip address (e.g 192.168.1.45).
 
 Example content of a **.env** file:
 
-    export SWARM_IP="0.0.0.0"
+    export SWARM_IP="192.168.1.45"
     export MONGO_INITDB_ROOT_USERNAME=admin
     export MONGO_INITDB_ROOT_PASSWORD=SuperPassword
     export MONGO_SERVER=localhost
@@ -113,7 +123,7 @@ Example content of a **.env** file:
     export MAIL_USE_TLS=True
     export MAIL_USERNAME=yourMailTrapUserId
     export MAIL_PASSWORD=yourMailTrapUserPassword
-    export MAIL_SENDER="flask@dummy-ops.localhost"
+    export MAIL_SENDER="no-reply@dummy-flask-rabbitmq-celery"
 
 Example content of a **.env.rc.tests** file, will just be sligthly different from the previous one, just adapt these definitions:
 
